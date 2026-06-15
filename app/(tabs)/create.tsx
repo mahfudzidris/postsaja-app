@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { Icon } from '../../components/Icon';
 import { Colors } from '../../constants/colors';
 import Header from '../../components/Header';
@@ -22,6 +23,7 @@ import { CHANNELS } from '../../constants/plans';
 interface MediaItem {
   uri: string;
   type: 'image' | 'video';
+  file?: File;
 }
 
 export default function CreateScreen() {
@@ -30,6 +32,7 @@ export default function CreateScreen() {
   const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const toggleChannel = useCallback((id: string) => {
     setSelectedChannels((prev) =>
@@ -37,16 +40,49 @@ export default function CreateScreen() {
     );
   }, []);
 
-  const handleAddMedia = () => {
-    // In a real app, this would open image/video picker
-    // For now, add a placeholder
-    setMedia((prev) => [
-      ...prev,
-      { uri: 'https://via.placeholder.com/150', type: 'image' },
-    ]);
+  const handleAddMedia = async () => {
+    if (Platform.OS === 'web') {
+      fileInputRef.current?.click();
+    } else {
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permission.granted) {
+        Alert.alert('Permission Required', 'Camera roll access is needed to pick media.');
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images', 'videos'],
+        allowsMultipleSelection: true,
+        quality: 0.8,
+      });
+      if (!result.canceled) {
+        const items: MediaItem[] = result.assets.map((a) => ({
+          uri: a.uri,
+          type: a.type === 'video' ? 'video' : 'image',
+        }));
+        setMedia((prev) => [...prev, ...items]);
+      }
+    }
+  };
+
+  const handleFilesSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    const items: MediaItem[] = Array.from(files).map((file) => ({
+      uri: URL.createObjectURL(file),
+      type: file.type.startsWith('video/') ? 'video' : 'image',
+      file,
+    }));
+    setMedia((prev) => [...prev, ...items]);
+    // Reset input so same file can be picked again
+    e.target.value = '';
   };
 
   const handleRemoveMedia = (index: number) => {
+    const item = media[index];
+    // Revoke object URL for web
+    if (item.file && item.uri.startsWith('blob:')) {
+      URL.revokeObjectURL(item.uri);
+    }
     setMedia((prev) => prev.filter((_, i) => i !== index));
   };
 
@@ -124,6 +160,16 @@ export default function CreateScreen() {
           onAdd={handleAddMedia}
           onRemove={handleRemoveMedia}
         />
+        {Platform.OS === 'web' && (
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*,video/*"
+            multiple
+            style={{ display: 'none' }}
+            onChange={handleFilesSelected}
+          />
+        )}
       </View>
 
       {/* Caption / AI Tweak */}
