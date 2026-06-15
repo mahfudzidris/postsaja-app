@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     gap: 24,
-    paddingBottom: 96,
+    paddingBottom: 140,
   },
   section: {
     paddingTop: 16,
