@@ -7,6 +7,8 @@ import {
   StyleSheet,
   Image,
   Alert,
+  Platform,
+  ActivityIndicator,
 } from 'react-native';
 import { Icon } from '../../components/Icon';
 import { router } from 'expo-router';
@@ -15,6 +17,7 @@ import Header from '../../components/Header';
 import { SettingRow } from '../../components/SettingRow';
 import { ToggleSwitch } from '../../components/ToggleSwitch';
 import { AuthService } from '../../services/auth';
+import { auth as authApi } from '../../services/api';
 import { User } from '../../types';
 import { POSTING_TIMES, LANGUAGES, APP_VERSION } from '../../constants/plans';
 
@@ -25,14 +28,54 @@ export default function SettingsScreen() {
   const [marketingTips, setMarketingTips] = useState(false);
   const [defaultTime, setDefaultTime] = useState('12:00');
   const [language, setLanguage] = useState('en');
+  const [platforms, setPlatforms] = useState<any[]>([]);
+  const [platformsLoading, setPlatformsLoading] = useState(false);
 
   useEffect(() => {
     loadUser();
+    fetchPlatforms();
   }, []);
 
   const loadUser = async () => {
     const cached = await AuthService.getCachedUser();
     if (cached) setUser(cached);
+  };
+
+  const fetchPlatforms = async () => {
+    setPlatformsLoading(true);
+    try {
+      const res = await authApi.get('/platforms');
+      setPlatforms(res.data.platforms || []);
+    } catch {
+      // Use empty
+    } finally {
+      setPlatformsLoading(false);
+    }
+  };
+
+  const handleConnect = async (platformId: string) => {
+    if (Platform.OS === 'web') {
+      const token = window.prompt(`Enter your ${platformId} access token:`);
+      if (!token) return;
+      try {
+        await authApi.post(`/platforms/${platformId}/callback`, {
+          access_token: token,
+        });
+        Alert.alert('Connected!', `${platformId} connected successfully.`);
+        fetchPlatforms();
+      } catch (err: any) {
+        Alert.alert('Error', err?.response?.data?.message || 'Failed to connect.');
+      }
+    }
+  };
+
+  const handleDisconnect = async (platformId: string) => {
+    try {
+      await authApi.delete(`/platforms/${platformId}/disconnect`);
+      fetchPlatforms();
+    } catch {
+      // ignore
+    }
   };
 
   const handleSignOut = async () => {
@@ -94,59 +137,60 @@ export default function SettingsScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Connected Accounts</Text>
         <View style={styles.accountList}>
-          <SettingRow
-            label="Instagram"
-            subtitle="@your_business"
-            icon="camera"
-            iconColor="#E1306C"
-            iconBg="#FCE7F3"
-            right={
-              <View style={styles.connectedBadge}>
-                <Icon name="link" size={11} color="#065F46" />
-                <Text style={styles.connectedText}>Connected</Text>
-              </View>
-            }
-          />
-          <View style={styles.divider} />
-          <SettingRow
-            label="TikTok"
-            subtitle="@your_business"
-            icon="music"
-            iconColor="#0F172A"
-            iconBg="#F1F5F9"
-            right={
-              <View style={styles.connectedBadge}>
-                <Icon name="link" size={11} color="#065F46" />
-                <Text style={styles.connectedText}>Connected</Text>
-              </View>
-            }
-          />
-          <View style={styles.divider} />
-          <SettingRow
-            label="Google Business"
-            subtitle="Not connected"
-            icon="store"
-            iconColor="#4285F4"
-            iconBg="#DBEAFE"
-            right={
-              <TouchableOpacity style={styles.connectBtn} activeOpacity={0.7}>
-                <Text style={styles.connectBtnText}>Connect</Text>
-              </TouchableOpacity>
-            }
-          />
-          <View style={styles.divider} />
-          <SettingRow
-            label="Telegram"
-            subtitle="Not connected"
-            icon="send"
-            iconColor="#0088cc"
-            iconBg="#E0F2FE"
-            right={
-              <TouchableOpacity style={styles.connectBtn} activeOpacity={0.7}>
-                <Text style={styles.connectBtnText}>Connect</Text>
-              </TouchableOpacity>
-            }
-          />
+          {platformsLoading ? (
+            <ActivityIndicator style={{ padding: 16 }} color={Colors.primary} />
+          ) : platforms.length === 0 ? (
+            <Text style={{ padding: 16, color: Colors['slate-400'], fontSize: 14, textAlign: 'center' }}>
+              No platforms available.
+            </Text>
+          ) : (
+            platforms.map((p: any, i: number) => (
+              <React.Fragment key={p.id}>
+                {i > 0 && <View style={styles.divider} />}
+                <SettingRow
+                  label={p.name}
+                  subtitle={p.connected ? (p.connection?.meta?.username || p.connection?.meta?.email || 'Connected') : 'Not connected'}
+                  icon={p.icon || 'circle'}
+                  iconColor={
+                    p.id === 'instagram' ? '#E1306C' :
+                    p.id === 'tiktok' ? '#0F172A' :
+                    p.id === 'google_business' ? '#4285F4' :
+                    p.id === 'telegram' ? '#0088cc' :
+                    p.id === 'facebook' ? '#1877F2' :
+                    p.id === 'twitter' ? '#1DA1F2' : Colors.primary
+                  }
+                  iconBg={
+                    p.id === 'instagram' ? '#FCE7F3' :
+                    p.id === 'tiktok' ? '#F1F5F9' :
+                    p.id === 'google_business' ? '#DBEAFE' :
+                    p.id === 'telegram' ? '#E0F2FE' :
+                    p.id === 'facebook' ? '#E7F3FF' :
+                    p.id === 'twitter' ? '#E8F5FE' : Colors['primary-light']
+                  }
+                  right={
+                    p.connected ? (
+                      <TouchableOpacity
+                        style={styles.disconnectBtn}
+                        onPress={() => handleDisconnect(p.id)}
+                        activeOpacity={0.7}
+                      >
+                        <Icon name="link" size={11} color="#DC2626" />
+                        <Text style={[styles.connectedText, { color: '#DC2626' }]}>Disconnect</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.connectBtn}
+                        onPress={() => handleConnect(p.id)}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={styles.connectBtnText}>Connect</Text>
+                      </TouchableOpacity>
+                    )
+                  }
+                />
+              </React.Fragment>
+            ))
+          )}
         </View>
       </View>
 
