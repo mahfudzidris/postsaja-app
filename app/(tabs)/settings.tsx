@@ -36,6 +36,19 @@ export default function SettingsScreen() {
     fetchPlatforms();
   }, []);
 
+  // Listen for OAuth popup messages
+  useEffect(() => {
+    if (Platform.OS !== 'web') return;
+    const handler = (event: MessageEvent) => {
+      if (event.data?.type === 'social_connected') {
+        fetchPlatforms();
+        Alert.alert('Connected!', `${event.data.platform} connected successfully.`);
+      }
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
   const loadUser = async () => {
     const cached = await AuthService.getCachedUser();
     if (cached) setUser(cached);
@@ -54,8 +67,59 @@ export default function SettingsScreen() {
   };
 
   const handleConnect = async (platformId: string) => {
-    if (Platform.OS === 'web') {
-      const token = window.prompt(`Enter your ${platformId} access token:`);
+    try {
+      // First, get the connection info from backend
+      const res = await api.post(`/platforms/${platformId}/connect`);
+      const data = res.data;
+
+      if (data.auth_type === 'oauth' && data.redirect_url) {
+        // Open OAuth popup window
+        const width = 600;
+        const height = 700;
+        const left = window.screenX + (window.innerWidth - width) / 2;
+        const top = window.screenY + (window.innerHeight - height) / 2;
+        const popup = window.open(
+          data.redirect_url,
+          `${platformId}Auth`,
+          `width=${width},height=${height},left=${left},top=${top},popup=1`
+        );
+
+        if (!popup) {
+          // Fallback: direct navigation
+          window.location.href = data.redirect_url;
+          return;
+        }
+
+        // Show a message that we're waiting
+        Alert.alert(
+          'Waiting for authorization',
+          `Complete the ${platformId} login in the popup window. This page will refresh automatically after connection.`
+        );
+
+        // Poll for popup close, then refresh
+        const checkPopup = setInterval(() => {
+          if (popup.closed) {
+            clearInterval(checkPopup);
+            fetchPlatforms();
+            Alert.alert('Connected!', `${platformId} account connected.`);
+          }
+        }, 1000);
+      } else if (data.auth_type === 'api_key') {
+        // Manual token entry for platforms that don't have OAuth configured
+        const metaInput = window.prompt(`Enter your ${platformId} access token:`);
+        if (!metaInput) return;
+
+        await api.post(`/platforms/${platformId}/callback`, {
+          access_token: metaInput,
+        });
+        Alert.alert('Connected!', `${platformId} connected successfully.`);
+        fetchPlatforms();
+      } else {
+        Alert.alert('Info', data.message || 'Connect initiated.');
+      }
+    } catch (err: any) {
+      // If the backend doesn't have OAuth configured, try direct prompt
+      const token = window.prompt(`Enter your ${platformId} access token (for manual setup):`);
       if (!token) return;
       try {
         await api.post(`/platforms/${platformId}/callback`, {
@@ -63,8 +127,8 @@ export default function SettingsScreen() {
         });
         Alert.alert('Connected!', `${platformId} connected successfully.`);
         fetchPlatforms();
-      } catch (err: any) {
-        Alert.alert('Error', err?.response?.data?.message || 'Failed to connect.');
+      } catch (err2: any) {
+        Alert.alert('Error', err2?.response?.data?.message || 'Failed to connect.');
       }
     }
   };
