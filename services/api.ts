@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { StorageService } from './storage';
 
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://postsaja-backend-main-60lgtj.laravel.cloud/api';
+
 const api = axios.create({
-  baseURL: 'https://postsaja-backend-main-60lgtj.laravel.cloud/api',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
