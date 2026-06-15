@@ -227,7 +227,7 @@ export default function SettingsScreen() {
           </View>
           <Icon name="chevron-right" size={16} color="#EF4444" />
         </TouchableOpacity>
-        <View style={[styles.divider, { borderColor: '#FECACA' }]} />
+        <View style={[styles.divider, styles.dangerDivider, { borderColor: '#FECACA' }]} />
         <TouchableOpacity style={styles.dangerRow} onPress={handleDeleteAccount} activeOpacity={0.7}>
           <View style={styles.dangerRowLeft}>
             <Icon name="trash-2" size={18} color={Colors['slate-400']} />
@@ -345,6 +345,9 @@ const styles = StyleSheet.create({
   },
   dangerCard: {
     borderColor: '#FECACA',
+  },
+  dangerDivider: {
+    marginVertical: 4,
   },
   cardTitle: {
     fontSize: 12,
