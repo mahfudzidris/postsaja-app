@@ -35,18 +35,13 @@ export default function SettingsScreen() {
     if (cached) setUser(cached);
   };
 
-  const handleSignOut = () => {
-    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Sign Out',
-        style: 'destructive',
-        onPress: async () => {
-          await AuthService.logout();
-          router.replace('/(auth)/login');
-        },
-      },
-    ]);
+  const handleSignOut = async () => {
+    try {
+      await AuthService.logout();
+      router.replace('/(auth)/login');
+    } catch {
+      router.replace('/(auth)/login');
+    }
   };
 
   const handleDeleteAccount = () => {
