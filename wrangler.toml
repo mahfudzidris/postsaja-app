@@ -1,0 +1,6 @@
+# Cloudflare Pages configuration
+# Build configuration is set via Cloudflare Pages dashboard
+# This file is for Workers + Pages features
+
+name = "postsaja-app"
+pages_build_output_dir = "dist"
