@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     gap: 12,
-    paddingBottom: 40,
+    paddingBottom: 96,
   },
   centerContainer: {
     flex: 1,
