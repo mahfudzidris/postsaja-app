@@ -141,6 +141,9 @@ const styles = StyleSheet.create({
     letterSpacing: -0.3,
     color: Colors.text,
     fontFamily: FontFamily.extrabold,
+    ...Platform.select({
+      web: { fontFamily: FontFamily.web.extrabold, fontWeight: '800' as const },
+    }),
   },
   backSection: {
     flexDirection: 'row',
@@ -152,6 +155,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: Colors.text,
     fontFamily: FontFamily.bold,
+    ...Platform.select({
+      web: { fontFamily: FontFamily.web.bold, fontWeight: '700' as const },
+    }),
   },
   rightSection: {
     flexDirection: 'row',

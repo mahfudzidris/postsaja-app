@@ -21,23 +21,6 @@ import { Colors } from '../constants/colors';
 /**
  * Global font style for web to inject @font-face fallback
  */
-const fontLink = Platform.select({
-  web: `
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-    />
-    <style>
-      html, body, #root {
-        font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-    </style>
-  `,
-  default: '',
-});
-
 export default function RootLayout() {
   const [fontsLoaded, fontsError] = useFonts({
     PlusJakartaSans_400Regular,
@@ -50,15 +33,14 @@ export default function RootLayout() {
   const [isAuthReady, setIsAuthReady] = useState(false);
 
   useEffect(() => {
-    // Inject web font link
+    // Ensure Google Fonts CDN link exists (already in public/index.html for production)
     if (Platform.OS === 'web' && typeof document !== 'undefined') {
-      const existing = document.getElementById('pj-font');
+      const existing = document.querySelector('link[href*="fonts.googleapis.com/css2?family=Plus+Jakarta+Sans"]');
       if (!existing) {
-        const div = document.createElement('div');
-        div.id = 'pj-font';
-        div.innerHTML = fontLink;
-        document.head.appendChild(div.firstElementChild!);
-        document.head.appendChild(div.lastElementChild!);
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap';
+        document.head.appendChild(link);
       }
     }
   }, []);
