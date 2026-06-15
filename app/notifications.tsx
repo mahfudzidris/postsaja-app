@@ -10,6 +10,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Colors } from '../constants/colors';
+import Header from '../components/Header';
 import { NotificationItemComponent } from '../components/NotificationItem';
 import { notifications as notificationsApi } from '../services/api';
 import { NotificationItem } from '../types';
@@ -79,18 +80,10 @@ export default function NotificationsScreen() {
   }
 
   return (
+    <View style={styles.wrapper}>
+      <Header variant="back" title="Notifications" />
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} activeOpacity={0.7}>
-            <Feather name="arrow-left" size={22} color={Colors.text} />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.title}>Notifications</Text>
-            <Text style={styles.subtitle}>Stay updated on your posts</Text>
-          </View>
-        </View>
+      <View style={styles.headerInline}>
         <TouchableOpacity style={styles.markAllBtn} onPress={handleMarkAllRead} activeOpacity={0.7}>
           <Text style={styles.markAllText}>Mark All Read</Text>
         </TouchableOpacity>
@@ -141,10 +134,15 @@ export default function NotificationsScreen() {
         </>
       )}
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
@@ -160,30 +158,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.background,
   },
-  header: {
+  headerInline: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 16,
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  backBtn: {
-    padding: 8,
-    borderRadius: 12,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: Colors.text,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: Colors['slate-400'],
-    marginTop: 2,
+    justifyContent: 'flex-end',
+    marginBottom: 8,
   },
   markAllBtn: {
     paddingHorizontal: 12,

@@ -1,4 +1,4 @@
-import * as SecureStore from 'expo-secure-store';
+import { StorageService } from './storage';
 import { auth as authApi } from './api';
 import { User } from '../types';
 
@@ -7,28 +7,24 @@ const USER_KEY = 'cached_user';
 
 export const AuthService = {
   async getToken(): Promise<string | null> {
-    try {
-      return await SecureStore.getItemAsync(TOKEN_KEY);
-    } catch {
-      return null;
-    }
+    return StorageService.getItem(TOKEN_KEY);
   },
 
   async setToken(token: string): Promise<void> {
-    await SecureStore.setItemAsync(TOKEN_KEY, token);
+    await StorageService.setItem(TOKEN_KEY, token);
   },
 
   async removeToken(): Promise<void> {
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
-    await SecureStore.deleteItemAsync(USER_KEY);
+    await StorageService.removeItem(TOKEN_KEY);
+    await StorageService.removeItem(USER_KEY);
   },
 
   async login(email: string, password: string): Promise<{ token: string; user: User }> {
     const response = await authApi.login(email, password);
     const { token, user } = response.data;
-    await SecureStore.setItemAsync(TOKEN_KEY, token);
+    await StorageService.setItem(TOKEN_KEY, token);
     if (user) {
-      await SecureStore.setItemAsync(USER_KEY, JSON.stringify(user));
+      await StorageService.setItem(USER_KEY, JSON.stringify(user));
     }
     return { token, user };
   },
@@ -41,9 +37,9 @@ export const AuthService = {
   ): Promise<{ token: string; user: User }> {
     const response = await authApi.register(name, email, password, passwordConfirmation);
     const { token, user } = response.data;
-    await SecureStore.setItemAsync(TOKEN_KEY, token);
+    await StorageService.setItem(TOKEN_KEY, token);
     if (user) {
-      await SecureStore.setItemAsync(USER_KEY, JSON.stringify(user));
+      await StorageService.setItem(USER_KEY, JSON.stringify(user));
     }
     return { token, user };
   },
@@ -59,7 +55,7 @@ export const AuthService = {
 
   async getCachedUser(): Promise<User | null> {
     try {
-      const data = await SecureStore.getItemAsync(USER_KEY);
+      const data = await StorageService.getItem(USER_KEY);
       return data ? JSON.parse(data) : null;
     } catch {
       return null;
@@ -69,7 +65,7 @@ export const AuthService = {
   async fetchUser(): Promise<User> {
     const response = await authApi.user();
     const user = response.data;
-    await SecureStore.setItemAsync(USER_KEY, JSON.stringify(user));
+    await StorageService.setItem(USER_KEY, JSON.stringify(user));
     return user;
   },
 

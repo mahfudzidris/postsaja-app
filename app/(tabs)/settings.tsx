@@ -11,6 +11,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
+import Header from '../../components/Header';
 import { SettingRow } from '../../components/SettingRow';
 import { ToggleSwitch } from '../../components/ToggleSwitch';
 import { AuthService } from '../../services/auth';
@@ -59,6 +60,8 @@ export default function SettingsScreen() {
   const planColor = user?.plan === 'pro' ? Colors.primary : Colors['slate-500'];
 
   return (
+    <View style={styles.wrapper}>
+      <Header />
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Header */}
       <View style={styles.header}>
@@ -237,10 +240,15 @@ export default function SettingsScreen() {
       {/* Version */}
       <Text style={styles.version}>{APP_VERSION}</Text>
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,

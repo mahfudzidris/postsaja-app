@@ -14,6 +14,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Colors } from '../constants/colors';
+import Header from '../components/Header';
 import { PlanCard } from '../components/PlanCard';
 import { AuthService } from '../services/auth';
 import { PLANS } from '../constants/plans';
@@ -61,17 +62,9 @@ export default function EditProfileScreen() {
   const isPro = user?.plan === 'pro';
 
   return (
+    <View style={styles.wrapper}>
+      <Header variant="back" title="Edit Profile" />
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Back + Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} activeOpacity={0.7}>
-          <Feather name="arrow-left" size={22} color={Colors.text} />
-        </TouchableOpacity>
-        <View>
-          <Text style={styles.title}>Edit Profile</Text>
-          <Text style={styles.subtitle}>Manage your personal details</Text>
-        </View>
-      </View>
 
       {/* Profile Photo */}
       <View style={styles.photoCard}>
@@ -204,10 +197,15 @@ export default function EditProfileScreen() {
         )}
       </View>
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
@@ -216,26 +214,6 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 24,
     paddingBottom: 40,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingTop: 16,
-  },
-  backBtn: {
-    padding: 8,
-    borderRadius: 12,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: Colors.text,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: Colors['slate-400'],
-    marginTop: 2,
   },
   photoCard: {
     backgroundColor: Colors.surface,

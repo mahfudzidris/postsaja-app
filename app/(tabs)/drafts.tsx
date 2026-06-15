@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
+import Header from '../../components/Header';
 import { DraftItem } from '../../components/DraftItem';
 import { posts as postsApi } from '../../services/api';
 import { Post } from '../../types';
@@ -89,6 +90,8 @@ export default function DraftsScreen() {
   }
 
   return (
+    <View style={styles.wrapper}>
+      <Header />
     <FlatList
       style={styles.container}
       contentContainerStyle={styles.content}
@@ -116,10 +119,15 @@ export default function DraftsScreen() {
         </View>
       )}
     />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,

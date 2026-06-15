@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
+import { StorageService } from './storage';
 
 const api = axios.create({
   baseURL: 'https://postsaja-backend-main-60lgtj.laravel.cloud/api',
@@ -12,12 +12,12 @@ const api = axios.create({
 // Interceptor to attach auth token
 api.interceptors.request.use(async (config) => {
   try {
-    const token = await SecureStore.getItemAsync('auth_token');
+    const token = await StorageService.getItem('auth_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
   } catch {
-    // SecureStore may fail on web; ignore
+    // Ignore errors
   }
   return config;
 });
@@ -27,7 +27,8 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      await SecureStore.deleteItemAsync('auth_token');
+      await StorageService.removeItem('auth_token');
+      await StorageService.removeItem('cached_user');
     }
     return Promise.reject(error);
   }

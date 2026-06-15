@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
+import Header from '../../components/Header';
 import { ChannelButton } from '../../components/ChannelButton';
 import { MediaUpload } from '../../components/MediaUpload';
 import { posts } from '../../services/api';
@@ -111,6 +112,8 @@ export default function CreateScreen() {
   };
 
   return (
+    <View style={styles.wrapper}>
+      <Header />
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Media Upload */}
       <View style={styles.section}>
@@ -206,10 +209,15 @@ export default function CreateScreen() {
         </TouchableOpacity>
       </View>
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,

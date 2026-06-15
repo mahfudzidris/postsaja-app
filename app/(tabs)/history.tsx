@@ -11,6 +11,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
+import Header from '../../components/Header';
 import { PostItem } from '../../components/PostItem';
 import { LoadMoreButton } from '../../components/LoadMoreButton';
 import { posts as postsApi } from '../../services/api';
@@ -82,6 +83,8 @@ export default function HistoryScreen() {
   }
 
   return (
+    <View style={styles.wrapper}>
+      <Header />
     <FlatList
       style={styles.container}
       contentContainerStyle={styles.content}
@@ -130,10 +133,15 @@ export default function HistoryScreen() {
         </>
       )}
     />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
