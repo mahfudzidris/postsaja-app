@@ -11,7 +11,7 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import { Icon } from 'components/Icon';
+import { Icon } from '../components/Icon';
 import { router } from 'expo-router';
 import { Colors } from '../constants/colors';
 import Header from '../components/Header';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { Icon } from './Icon';
+import { Icon, IconName } from './Icon';
 import { Colors } from '../constants/colors';
 import { Post } from '../types';
 
@@ -9,14 +9,14 @@ interface PostItemProps {
   onPress?: () => void;
 }
 
-const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; icon: keyof typeof Feather.glyphMap }> = {
+const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; icon: IconName }> = {
   published: { label: 'Posted', color: '#065F46', bg: '#D1FAE5', icon: 'check-circle' },
   scheduled: { label: 'Scheduled', color: '#B45309', bg: '#FEF3C7', icon: 'clock' },
   failed: { label: 'Failed', color: '#B91C1C', bg: '#FEE2E2', icon: 'alert-circle' },
   draft: { label: 'Draft', color: '#475569', bg: '#F1F5F9', icon: 'file-text' },
 };
 
-const CHANNEL_CONFIG: Record<string, { label: string; bg: string; color: string; icon: keyof typeof Feather.glyphMap }> = {
+const CHANNEL_CONFIG: Record<string, { label: string; bg: string; color: string; icon: IconName }> = {
   instagram: { label: 'IG', bg: '#FCE7F3', color: '#E1306C', icon: 'camera' },
   tiktok: { label: 'TT', bg: '#F1F5F9', color: '#0F172A', icon: 'music' },
   google_business: { label: 'GBP', bg: '#DBEAFE', color: '#4285F4', icon: 'store' },

@@ -166,7 +166,7 @@ export default function RegisterScreen() {
             onPress={() => setAgreeTerms(!agreeTerms)}
             activeOpacity={0.7}
           >
-            <Feather
+            <Icon
               name={agreeTerms ? 'check-square' : 'square'}
               size={20}
               color={agreeTerms ? Colors.primary : Colors['slate-300']}

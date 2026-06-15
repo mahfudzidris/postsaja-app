@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { Icon } from './Icon';
+import { Icon, IconName } from './Icon';
 import { Colors } from '../constants/colors';
 import { NotificationItem as NotificationType } from '../types';
 
@@ -21,7 +21,7 @@ function timeAgo(dateStr: string): string {
   return `${Math.floor(diff / 86400)} days ago`;
 }
 
-const NOTIF_CONFIG: Record<string, { icon: keyof typeof Feather.glyphMap; bg: string; color: string }> = {
+const NOTIF_CONFIG: Record<string, { icon: IconName; bg: string; color: string }> = {
   success: { icon: 'check-circle', bg: '#ECFDF5', color: '#10B981' },
   failure: { icon: 'alert-circle', bg: '#FEF2F2', color: '#EF4444' },
   scheduled: { icon: 'clock', bg: '#EEF2FF', color: '#4F46E5' },

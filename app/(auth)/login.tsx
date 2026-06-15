@@ -111,7 +111,7 @@ export default function LoginScreen() {
                 style={styles.eyeBtn}
                 onPress={() => setShowPassword(!showPassword)}
               >
-                <Feather
+                <Icon
                   name={showPassword ? 'eye-off' : 'eye'}
                   size={18}
                   color={Colors['slate-400']}

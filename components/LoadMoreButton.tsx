@@ -23,7 +23,7 @@ export function LoadMoreButton({ loading, expanded, onToggle }: LoadMoreButtonPr
           <ActivityIndicator size="small" color="#64748B" />
         ) : (
           <>
-            <Feather
+            <Icon
               name={expanded ? 'chevron-up' : 'chevron-down'}
               size={18}
               color="#64748B"

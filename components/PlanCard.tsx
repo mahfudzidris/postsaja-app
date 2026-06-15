@@ -22,7 +22,7 @@ export function PlanCard({ name, price, features, isActive, isCurrent }: PlanCar
 
       <View style={[styles.header, isActive && { marginTop: 6 }]}>
         <View style={[styles.iconBox, { backgroundColor: isActive ? Colors['primary-light'] : Colors['slate-200'] }]}>
-          <Feather
+          <Icon
             name={isActive ? 'crown' : 'zap'}
             size={18}
             color={isActive ? Colors.primary : Colors.muted}

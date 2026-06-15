@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { Icon } from './Icon';
+import { Icon, IconName } from './Icon';
 import { Colors } from '../constants/colors';
 
 interface ChannelButtonProps {
   id: string;
   label: string;
-  icon: keyof typeof Feather.glyphMap;
+  icon: IconName;
   iconColor: string;
   bgColor: string;
   selected: boolean;
@@ -37,7 +37,7 @@ export function ChannelButton({
         </View>
         <Text style={styles.label}>{label}</Text>
       </View>
-      <Feather
+      <Icon
         name={selected ? 'check-circle' : 'circle'}
         size={20}
         color={selected ? Colors.primary : Colors['slate-300']}

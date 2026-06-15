@@ -234,8 +234,10 @@ const NAME_MAP: Record<string, string> = {
   'instagram': 'Instagram',
 };
 
+export type IconName = string;
+
 interface IconProps {
-  name: string;
+  name: IconName;
   size?: number;
   color?: string;
   strokeWidth?: number;

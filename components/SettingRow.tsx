@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Icon } from './Icon';
+import { Icon, IconName } from './Icon';
 import { Colors } from '../constants/colors';
 
 interface SettingRowProps {
   label: string;
   subtitle?: string;
   right?: React.ReactNode;
-  icon?: keyof typeof Feather.glyphMap;
+  icon?: IconName;
   iconColor?: string;
   iconBg?: string;
   onPress?: () => void;

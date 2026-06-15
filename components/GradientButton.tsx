@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Icon } from './Icon';
+import { Icon, IconName } from './Icon';
 import { Colors } from '../constants/colors';
 import { BorderRadius, Spacing } from '../constants/spacing';
 import { BoxShadows } from '../constants/shadows';
@@ -18,7 +18,7 @@ interface GradientButtonProps {
   onPress: () => void;
   loading?: boolean;
   disabled?: boolean;
-  icon?: keyof typeof Feather.glyphMap;
+  icon?: IconName;
   variant?: 'primary' | 'success';
   size?: 'md' | 'lg';
   rounded?: boolean;
