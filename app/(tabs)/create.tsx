@@ -308,26 +308,7 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingTop: 8,
   },
-  postBtn: {
-    width: '100%',
-    height: 56,
-    borderRadius: 16,
-    backgroundColor: Colors.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    shadowColor: Colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 14,
-    elevation: 6,
-  },
-  postBtnText: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
+
   draftBtn: {
     width: '100%',
     height: 48,

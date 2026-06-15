@@ -9,6 +9,8 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Colors } from '../constants/colors';
+import { BoxShadows } from '../constants/shadows';
+import { FontFamily } from '../constants/typography';
 
 interface HeaderProps {
   variant?: 'default' | 'back';
@@ -117,13 +119,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     height: 56,
-    backgroundColor: 'rgba(248, 250, 252, 0.80)',
+    backgroundColor: Colors.glass.background,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(226, 232, 240, 0.50)',
+    borderBottomColor: Colors.glass.border,
     ...Platform.select({
       web: {
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
+        boxShadow: BoxShadows.none,
       },
     }),
   },
@@ -137,6 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: -0.3,
     color: Colors.text,
+    fontFamily: FontFamily.extrabold,
   },
   backSection: {
     flexDirection: 'row',
@@ -147,6 +151,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
     color: Colors.text,
+    fontFamily: FontFamily.bold,
   },
   rightSection: {
     flexDirection: 'row',

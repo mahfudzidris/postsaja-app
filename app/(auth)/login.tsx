@@ -13,6 +13,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
+import { GradientButton } from '../../components/GradientButton';
 import { AuthService } from '../../services/auth';
 
 export default function LoginScreen() {
@@ -125,21 +126,13 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
-            style={[styles.primaryBtn, loading && styles.disabledBtn]}
+          <GradientButton
+            title="Sign In"
+            icon="log-in"
             onPress={handleLogin}
+            loading={loading}
             disabled={loading}
-            activeOpacity={0.9}
-          >
-            {loading ? (
-              <ActivityIndicator color="#FFF" />
-            ) : (
-              <>
-                <Feather name="log-in" size={18} color="#FFF" />
-                <Text style={styles.primaryBtnText}>Sign In</Text>
-              </>
-            )}
-          </TouchableOpacity>
+          />
         </View>
 
         {/* Divider */}
@@ -250,10 +243,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: Colors['slate-600'],
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   input: {
     width: '100%',
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: Colors['slate-200'],
     borderRadius: 12,
@@ -261,13 +256,19 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 14,
     color: Colors.text,
+    ...Platform.select({
+      web: {
+        outlineStyle: 'none',
+        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+      },
+    }),
   },
   passwordWrap: {
     position: 'relative',
   },
   passwordInput: {
     width: '100%',
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: Colors['slate-200'],
     borderRadius: 12,
@@ -276,6 +277,12 @@ const styles = StyleSheet.create({
     paddingRight: 44,
     fontSize: 14,
     color: Colors.text,
+    ...Platform.select({
+      web: {
+        outlineStyle: 'none',
+        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+      },
+    }),
   },
   eyeBtn: {
     position: 'absolute',
@@ -293,29 +300,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.primary,
   },
-  primaryBtn: {
-    width: '100%',
-    height: 52,
-    borderRadius: 16,
-    backgroundColor: Colors.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    shadowColor: Colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 14,
-    elevation: 6,
-  },
-  disabledBtn: {
-    opacity: 0.7,
-  },
-  primaryBtnText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
+
   divider: {
     flexDirection: 'row',
     alignItems: 'center',

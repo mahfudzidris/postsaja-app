@@ -1,6 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, ActivityIndicator, StyleSheet, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { Colors } from '../constants/colors';
+import { BoxShadows } from '../constants/shadows';
 
 interface LoadMoreButtonProps {
   loading?: boolean;
@@ -49,14 +51,21 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingHorizontal: 24,
     paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.surface,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: Colors.border,
     borderRadius: 16,
+    ...Platform.select({ web: { boxShadow: BoxShadows.card } }) || {
+      shadowColor: '#4F46E5',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 20,
+      elevation: 4,
+    },
   },
   text: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#64748B',
+    color: Colors.muted,
   },
 });

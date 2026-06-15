@@ -13,6 +13,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
+import { GradientButton } from '../../components/GradientButton';
 import { AuthService } from '../../services/auth';
 
 export default function RegisterScreen() {
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
   label: { fontSize: 12, fontWeight: '600', color: Colors['slate-600'] },
   input: {
     width: '100%',
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: Colors['slate-200'],
     borderRadius: 12,
@@ -274,11 +275,17 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 14,
     color: Colors.text,
+    ...Platform.select({
+      web: {
+        outlineStyle: 'none',
+        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+      },
+    }),
   },
   passwordWrap: { position: 'relative' },
   passwordInput: {
     width: '100%',
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: Colors['slate-200'],
     borderRadius: 12,
@@ -287,6 +294,12 @@ const styles = StyleSheet.create({
     paddingRight: 44,
     fontSize: 14,
     color: Colors.text,
+    ...Platform.select({
+      web: {
+        outlineStyle: 'none',
+        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+      },
+    }),
   },
   eyeBtn: {
     position: 'absolute',
@@ -298,23 +311,7 @@ const styles = StyleSheet.create({
   termsRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
   termsText: { fontSize: 12, color: Colors['slate-400'], flex: 1, lineHeight: 18 },
   termsLink: { fontWeight: '600', color: Colors.primary },
-  primaryBtn: {
-    width: '100%',
-    height: 52,
-    borderRadius: 16,
-    backgroundColor: Colors.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    shadowColor: Colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 14,
-    elevation: 6,
-  },
-  disabledBtn: { opacity: 0.7 },
-  primaryBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
+
   divider: { flexDirection: 'row', alignItems: 'center', gap: 12, marginVertical: 24 },
   dividerLine: { flex: 1, height: 1, backgroundColor: Colors['slate-200'] },
   dividerText: { fontSize: 12, fontWeight: '600', color: Colors['slate-400'] },
