@@ -132,6 +132,7 @@ export default function LoginScreen() {
             onPress={handleLogin}
             loading={loading}
             disabled={loading}
+            rounded={false}
           />
         </View>
 

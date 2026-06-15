@@ -184,6 +184,7 @@ export default function RegisterScreen() {
             onPress={handleRegister}
             loading={loading}
             disabled={loading}
+            rounded={false}
           />
         </View>
 
