@@ -178,21 +178,13 @@ export default function RegisterScreen() {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.primaryBtn, loading && styles.disabledBtn]}
+          <GradientButton
+            title="Create Account"
+            icon="user-plus"
             onPress={handleRegister}
+            loading={loading}
             disabled={loading}
-            activeOpacity={0.9}
-          >
-            {loading ? (
-              <ActivityIndicator color="#FFF" />
-            ) : (
-              <>
-                <Icon name="user-plus" size={18} color="#FFF" />
-                <Text style={styles.primaryBtnText}>Create Account</Text>
-              </>
-            )}
-          </TouchableOpacity>
+          />
         </View>
 
         {/* Divider */}
