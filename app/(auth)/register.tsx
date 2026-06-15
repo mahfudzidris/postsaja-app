@@ -1,0 +1,337 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { Colors } from '../../constants/colors';
+import { AuthService } from '../../services/auth';
+
+export default function RegisterScreen() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleRegister = async () => {
+    if (!name || !email || !password || !confirmPassword) {
+      setError('Please fill in all fields');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters');
+      return;
+    }
+    if (!agreeTerms) {
+      setError('Please agree to the Terms of Service');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    try {
+      await AuthService.register(name, email, password, confirmPassword);
+      router.replace('/(tabs)/create');
+    } catch (err: any) {
+      setError(err?.response?.data?.message || 'Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    // Placeholder for Google OAuth
+  };
+
+  const handleFacebookLogin = () => {
+    // Placeholder for Facebook OAuth
+  };
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Logo */}
+        <View style={styles.logoSection}>
+          <View style={styles.logoCircle}>
+            <Feather name="send" size={28} color={Colors.primary} />
+          </View>
+          <Text style={styles.appName}>PostSaja</Text>
+          <Text style={styles.tagline}>Start posting smarter today</Text>
+        </View>
+
+        <Text style={styles.title}>Create your account</Text>
+
+        {error ? (
+          <View style={styles.errorBox}>
+            <Feather name="alert-circle" size={14} color="#EF4444" />
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : null}
+
+        <View style={styles.form}>
+          <View style={styles.field}>
+            <Text style={styles.label}>Full Name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Your name"
+              placeholderTextColor={Colors['slate-400']}
+              value={name}
+              onChangeText={setName}
+              autoCapitalize="words"
+            />
+          </View>
+
+          <View style={styles.field}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="your@email.com"
+              placeholderTextColor={Colors['slate-400']}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"
+            />
+          </View>
+
+          <View style={styles.field}>
+            <Text style={styles.label}>Password</Text>
+            <View style={styles.passwordWrap}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Min. 8 characters"
+                placeholderTextColor={Colors['slate-400']}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                autoCapitalize="none"
+              />
+              <TouchableOpacity
+                style={styles.eyeBtn}
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                <Feather name={showPassword ? 'eye-off' : 'eye'} size={18} color={Colors['slate-400']} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.field}>
+            <Text style={styles.label}>Confirm Password</Text>
+            <View style={styles.passwordWrap}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Re-enter your password"
+                placeholderTextColor={Colors['slate-400']}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry={!showConfirm}
+                autoCapitalize="none"
+              />
+              <TouchableOpacity
+                style={styles.eyeBtn}
+                onPress={() => setShowConfirm(!showConfirm)}
+              >
+                <Feather name={showConfirm ? 'eye-off' : 'eye'} size={18} color={Colors['slate-400']} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Terms */}
+          <TouchableOpacity
+            style={styles.termsRow}
+            onPress={() => setAgreeTerms(!agreeTerms)}
+            activeOpacity={0.7}
+          >
+            <Feather
+              name={agreeTerms ? 'check-square' : 'square'}
+              size={20}
+              color={agreeTerms ? Colors.primary : Colors['slate-300']}
+            />
+            <Text style={styles.termsText}>
+              I agree to the{' '}
+              <Text style={styles.termsLink}>Terms of Service</Text> and{' '}
+              <Text style={styles.termsLink}>Privacy Policy</Text>
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.primaryBtn, loading && styles.disabledBtn]}
+            onPress={handleRegister}
+            disabled={loading}
+            activeOpacity={0.9}
+          >
+            {loading ? (
+              <ActivityIndicator color="#FFF" />
+            ) : (
+              <>
+                <Feather name="user-plus" size={18} color="#FFF" />
+                <Text style={styles.primaryBtnText}>Create Account</Text>
+              </>
+            )}
+          </TouchableOpacity>
+        </View>
+
+        {/* Divider */}
+        <View style={styles.divider}>
+          <View style={styles.dividerLine} />
+          <Text style={styles.dividerText}>Or continue with</Text>
+          <View style={styles.dividerLine} />
+        </View>
+
+        {/* Social Buttons */}
+        <View style={styles.socialSection}>
+          <TouchableOpacity style={styles.socialBtn} onPress={handleGoogleLogin} activeOpacity={0.8}>
+            <Text style={styles.socialBtnText}>Continue with Google</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.socialBtn, styles.facebookBtn]}
+            onPress={handleFacebookLogin}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.socialBtnText, { color: '#FFF' }]}>Continue with Facebook</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Already have an account? </Text>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Text style={styles.footerLink}>Sign In</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: Colors.background },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+    maxWidth: 400,
+    width: '100%',
+    alignSelf: 'center',
+  },
+  logoSection: { alignItems: 'center', marginBottom: 32 },
+  logoCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 16,
+    backgroundColor: Colors['primary-light'],
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  appName: { fontSize: 24, fontWeight: '800', letterSpacing: -0.5, color: Colors.text },
+  tagline: { fontSize: 14, color: Colors['slate-400'], marginTop: 4 },
+  title: { fontSize: 20, fontWeight: '700', color: Colors.text, marginBottom: 24 },
+  errorBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#FEF2F2',
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  errorText: { fontSize: 13, color: '#DC2626', flex: 1 },
+  form: { gap: 16 },
+  field: { gap: 6 },
+  label: { fontSize: 12, fontWeight: '600', color: Colors['slate-600'] },
+  input: {
+    width: '100%',
+    backgroundColor: '#F8FAFC',
+    borderWidth: 1,
+    borderColor: Colors['slate-200'],
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: Colors.text,
+  },
+  passwordWrap: { position: 'relative' },
+  passwordInput: {
+    width: '100%',
+    backgroundColor: '#F8FAFC',
+    borderWidth: 1,
+    borderColor: Colors['slate-200'],
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    paddingRight: 44,
+    fontSize: 14,
+    color: Colors.text,
+  },
+  eyeBtn: {
+    position: 'absolute',
+    right: 12,
+    top: '50%',
+    transform: [{ translateY: -12 }],
+    padding: 4,
+  },
+  termsRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
+  termsText: { fontSize: 12, color: Colors['slate-400'], flex: 1, lineHeight: 18 },
+  termsLink: { fontWeight: '600', color: Colors.primary },
+  primaryBtn: {
+    width: '100%',
+    height: 52,
+    borderRadius: 16,
+    backgroundColor: Colors.primary,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 14,
+    elevation: 6,
+  },
+  disabledBtn: { opacity: 0.7 },
+  primaryBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
+  divider: { flexDirection: 'row', alignItems: 'center', gap: 12, marginVertical: 24 },
+  dividerLine: { flex: 1, height: 1, backgroundColor: Colors['slate-200'] },
+  dividerText: { fontSize: 12, fontWeight: '600', color: Colors['slate-400'] },
+  socialSection: { gap: 12 },
+  socialBtn: {
+    width: '100%',
+    height: 48,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors['slate-200'],
+    backgroundColor: Colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  facebookBtn: { backgroundColor: '#1877F2', borderWidth: 0 },
+  socialBtnText: { fontSize: 14, fontWeight: '600', color: Colors.text },
+  footer: { flexDirection: 'row', justifyContent: 'center', marginTop: 24 },
+  footerText: { fontSize: 14, color: Colors['slate-400'] },
+  footerLink: { fontSize: 14, fontWeight: '700', color: Colors.primary },
+});
