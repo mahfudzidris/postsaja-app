@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, ActivityIndicator, StyleSheet, Platform } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 import { BoxShadows } from '../constants/shadows';
 

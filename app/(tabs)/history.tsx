@@ -8,7 +8,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from '../../components/Icon';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
 import Header from '../../components/Header';
@@ -101,7 +101,7 @@ export default function HistoryScreen() {
             <Text style={styles.subtitle}>Your recent cross-posts</Text>
           </View>
           <TouchableOpacity style={styles.filterBtn} activeOpacity={0.7}>
-            <Feather name="filter" size={14} color={Colors['slate-600']} />
+            <Icon name="filter" size={14} color={Colors['slate-600']} />
             <Text style={styles.filterText}>Filter</Text>
           </TouchableOpacity>
         </View>
@@ -109,7 +109,7 @@ export default function HistoryScreen() {
       ListEmptyComponent={() => (
         <View style={styles.emptyState}>
           <View style={styles.emptyIcon}>
-            <Feather name="clock" size={36} color={Colors['slate-300']} />
+            <Icon name="clock" size={36} color={Colors['slate-300']} />
           </View>
           <Text style={styles.emptyTitle}>No posts yet</Text>
           <Text style={styles.emptySubtitle}>Create your first post above</Text>
@@ -119,7 +119,7 @@ export default function HistoryScreen() {
         <>
           {error && (
             <View style={styles.errorBox}>
-              <Feather name="alert-circle" size={14} color="#EF4444" />
+              <Icon name="alert-circle" size={14} color="#EF4444" />
               <Text style={styles.errorText}>{error}</Text>
             </View>
           )}

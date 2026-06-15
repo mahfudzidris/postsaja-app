@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 import { NotificationItem as NotificationType } from '../types';
 
@@ -42,7 +42,7 @@ export function NotificationItemComponent({
       activeOpacity={0.7}
     >
       <View style={[styles.iconWrap, { backgroundColor: cfg.bg }]}>
-        <Feather name={cfg.icon} size={20} color={cfg.color} />
+        <Icon name={cfg.icon} size={20} color={cfg.color} />
       </View>
       <View style={styles.content}>
         <Text style={styles.title}>{item.title}</Text>

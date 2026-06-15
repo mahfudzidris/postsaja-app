@@ -11,7 +11,7 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from 'components/Icon';
 import { router } from 'expo-router';
 import { Colors } from '../constants/colors';
 import Header from '../components/Header';
@@ -74,11 +74,11 @@ export default function EditProfileScreen() {
               {user?.avatar ? (
                 <Image source={{ uri: user.avatar }} style={styles.avatarImage} />
               ) : (
-                <Feather name="user" size={32} color={Colors['slate-400']} />
+                <Icon name="user" size={32} color={Colors['slate-400']} />
               )}
             </View>
             <TouchableOpacity style={styles.cameraBtn} activeOpacity={0.8}>
-              <Feather name="camera" size={14} color="#FFF" />
+              <Icon name="camera" size={14} color="#FFF" />
             </TouchableOpacity>
           </View>
           <View>
@@ -149,7 +149,7 @@ export default function EditProfileScreen() {
             <ActivityIndicator color="#FFF" />
           ) : (
             <>
-              <Feather name="check-circle" size={18} color="#FFF" />
+              <Icon name="check-circle" size={18} color="#FFF" />
               <Text style={styles.saveBtnText}>Save Changes</Text>
             </>
           )}
@@ -159,7 +159,7 @@ export default function EditProfileScreen() {
       {/* Subscription Plan */}
       <View style={styles.card}>
         <View style={styles.planSectionTitle}>
-          <Feather name="crown" size={18} color={Colors.primary} />
+          <Icon name="crown" size={18} color={Colors.primary} />
           <Text style={styles.cardTitle}>Subscription Plan</Text>
         </View>
 
@@ -181,7 +181,7 @@ export default function EditProfileScreen() {
         {!isPro && (
           <View style={styles.upgradeCta}>
             <View style={styles.upgradeIconWrap}>
-              <Feather name="zap" size={18} color="#D97706" />
+              <Icon name="zap" size={18} color="#D97706" />
             </View>
             <View style={styles.upgradeContent}>
               <Text style={styles.upgradeTitle}>Want more power?</Text>

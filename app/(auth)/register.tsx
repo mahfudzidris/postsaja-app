@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from '../../components/Icon';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
 import { GradientButton } from '../../components/GradientButton';
@@ -76,7 +76,7 @@ export default function RegisterScreen() {
         {/* Logo */}
         <View style={styles.logoSection}>
           <View style={styles.logoCircle}>
-            <Feather name="send" size={28} color={Colors.primary} />
+            <Icon name="send" size={28} color={Colors.primary} />
           </View>
           <Text style={styles.appName}>PostSaja</Text>
           <Text style={styles.tagline}>Start posting smarter today</Text>
@@ -86,7 +86,7 @@ export default function RegisterScreen() {
 
         {error ? (
           <View style={styles.errorBox}>
-            <Feather name="alert-circle" size={14} color="#EF4444" />
+            <Icon name="alert-circle" size={14} color="#EF4444" />
             <Text style={styles.errorText}>{error}</Text>
           </View>
         ) : null}
@@ -134,7 +134,7 @@ export default function RegisterScreen() {
                 style={styles.eyeBtn}
                 onPress={() => setShowPassword(!showPassword)}
               >
-                <Feather name={showPassword ? 'eye-off' : 'eye'} size={18} color={Colors['slate-400']} />
+                <Icon name={showPassword ? 'eye-off' : 'eye'} size={18} color={Colors['slate-400']} />
               </TouchableOpacity>
             </View>
           </View>
@@ -155,7 +155,7 @@ export default function RegisterScreen() {
                 style={styles.eyeBtn}
                 onPress={() => setShowConfirm(!showConfirm)}
               >
-                <Feather name={showConfirm ? 'eye-off' : 'eye'} size={18} color={Colors['slate-400']} />
+                <Icon name={showConfirm ? 'eye-off' : 'eye'} size={18} color={Colors['slate-400']} />
               </TouchableOpacity>
             </View>
           </View>
@@ -188,7 +188,7 @@ export default function RegisterScreen() {
               <ActivityIndicator color="#FFF" />
             ) : (
               <>
-                <Feather name="user-plus" size={18} color="#FFF" />
+                <Icon name="user-plus" size={18} color="#FFF" />
                 <Text style={styles.primaryBtnText}>Create Account</Text>
               </>
             )}

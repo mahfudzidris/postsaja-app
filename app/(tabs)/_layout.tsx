@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from '../components/Icon';
 import { Colors } from '../../constants/colors';
 
 export default function TabsLayout() {
@@ -32,7 +32,7 @@ export default function TabsLayout() {
         options={{
           title: 'Create',
           tabBarIcon: ({ color, size }) => (
-            <Feather name="plus-circle" size={22} color={color} />
+            <Icon name="plus-circle" size={22} color={color} />
           ),
         }}
       />
@@ -41,7 +41,7 @@ export default function TabsLayout() {
         options={{
           title: 'History',
           tabBarIcon: ({ color, size }) => (
-            <Feather name="clock" size={20} color={color} />
+            <Icon name="clock" size={20} color={color} />
           ),
         }}
       />
@@ -50,7 +50,7 @@ export default function TabsLayout() {
         options={{
           title: 'Drafts',
           tabBarIcon: ({ color, size }) => (
-            <Feather name="file-text" size={20} color={color} />
+            <Icon name="file-text" size={20} color={color} />
           ),
           tabBarBadge: undefined as any,
         }}
@@ -60,7 +60,7 @@ export default function TabsLayout() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <Feather name="settings" size={20} color={color} />
+            <Icon name="settings" size={20} color={color} />
           ),
         }}
       />

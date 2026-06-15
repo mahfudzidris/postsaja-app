@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 import { Post } from '../types';
 
@@ -45,7 +45,7 @@ export function PostItem({ post, onPress }: PostItemProps) {
     >
       <View style={styles.inner}>
         <View style={styles.thumbnail}>
-          <Feather name="image" size={22} color={Colors.muted} />
+          <Icon name="image" size={22} color={Colors.muted} />
         </View>
         <View style={styles.content}>
           <Text style={styles.caption} numberOfLines={1}>
@@ -64,7 +64,7 @@ export function PostItem({ post, onPress }: PostItemProps) {
               );
             })}
             <View style={[styles.statusTag, { backgroundColor: status.bg }]}>
-              <Feather name={status.icon} size={10} color={status.color} />
+              <Icon name={status.icon} size={10} color={status.color} />
               <Text style={[styles.statusText, { color: status.color }]}>
                 {status.label}
               </Text>

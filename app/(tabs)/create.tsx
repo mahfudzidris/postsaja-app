@@ -10,7 +10,7 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from '../../components/Icon';
 import { Colors } from '../../constants/colors';
 import Header from '../../components/Header';
 import { ChannelButton } from '../../components/ChannelButton';
@@ -139,7 +139,7 @@ export default function CreateScreen() {
               <ActivityIndicator size="small" color="#065F46" />
             ) : (
               <>
-                <Feather name="wand" size={14} color="#065F46" />
+                <Icon name="wand" size={14} color="#065F46" />
                 <Text style={styles.aiBtnText}>AI Tweak</Text>
               </>
             )}
@@ -155,7 +155,7 @@ export default function CreateScreen() {
           textAlignVertical="top"
         />
         <View style={styles.captionHint}>
-          <Feather name="info" size={14} color={Colors['slate-400']} />
+          <Icon name="info" size={14} color={Colors['slate-400']} />
           <Text style={styles.captionHintText}>
             Optimize for local audiences with one click.
           </Text>
@@ -194,7 +194,7 @@ export default function CreateScreen() {
           ) : (
             <>
               <Text style={styles.postBtnText}>Post Saja!</Text>
-              <Feather name="send" size={20} color="#FFF" />
+              <Icon name="send" size={20} color="#FFF" />
             </>
           )}
         </TouchableOpacity>
@@ -204,7 +204,7 @@ export default function CreateScreen() {
           onPress={handleSaveDraft}
           activeOpacity={0.8}
         >
-          <Feather name="save" size={18} color={Colors['slate-600']} />
+          <Icon name="save" size={18} color={Colors['slate-600']} />
           <Text style={styles.draftBtnText}>Save as Draft</Text>
         </TouchableOpacity>
       </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 
 interface DraftItemProps {
@@ -30,7 +30,7 @@ export function DraftItem({
     >
       <View style={styles.inner}>
         <View style={styles.iconBox}>
-          <Feather name="file-edit" size={22} color="#D97706" />
+          <Icon name="file-edit" size={22} color="#D97706" />
         </View>
         <View style={styles.content}>
           <Text style={styles.caption} numberOfLines={2}>
@@ -38,13 +38,13 @@ export function DraftItem({
           </Text>
           <View style={styles.meta}>
             <View style={styles.metaItem}>
-              <Feather name={hasVideo ? 'video' : 'image'} size={12} color={Colors['slate-400']} />
+              <Icon name={hasVideo ? 'video' : 'image'} size={12} color={Colors['slate-400']} />
               <Text style={styles.metaText}>
                 {mediaCount} {hasVideo ? 'video' : 'media'}
               </Text>
             </View>
             <View style={styles.metaItem}>
-              <Feather name="clock" size={12} color={Colors['slate-400']} />
+              <Icon name="clock" size={12} color={Colors['slate-400']} />
               <Text style={styles.metaText}>Edited {editedAgo}</Text>
             </View>
           </View>
@@ -57,7 +57,7 @@ export function DraftItem({
           </View>
         </View>
         <TouchableOpacity style={styles.deleteBtn} onPress={onDelete}>
-          <Feather name="trash-2" size={18} color={Colors.danger} />
+          <Icon name="trash-2" size={18} color={Colors.danger} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

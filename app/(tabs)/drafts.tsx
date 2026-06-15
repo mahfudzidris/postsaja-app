@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from '../../components/Icon';
 import { Colors } from '../../constants/colors';
 import Header from '../../components/Header';
 import { DraftItem } from '../../components/DraftItem';
@@ -112,7 +112,7 @@ export default function DraftsScreen() {
       ListEmptyComponent={() => (
         <View style={styles.emptyState}>
           <View style={styles.emptyIcon}>
-            <Feather name="file-text" size={36} color={Colors['slate-300']} />
+            <Icon name="file-text" size={36} color={Colors['slate-300']} />
           </View>
           <Text style={styles.emptyTitle}>No drafts yet</Text>
           <Text style={styles.emptySubtitle}>Save your work-in-progress here</Text>

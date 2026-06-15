@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 
 interface ChannelButtonProps {
@@ -33,7 +33,7 @@ export function ChannelButton({
     >
       <View style={styles.left}>
         <View style={[styles.iconWrap, { backgroundColor: bgColor }]}>
-          <Feather name={icon} size={20} color={iconColor} />
+          <Icon name={icon} size={20} color={iconColor} />
         </View>
         <Text style={styles.label}>{label}</Text>
       </View>

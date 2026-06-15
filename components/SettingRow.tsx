@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 
 interface SettingRowProps {
@@ -26,7 +26,7 @@ export function SettingRow({
       <View style={styles.left}>
         {icon && (
           <View style={[styles.iconWrap, { backgroundColor: iconBg }]}>
-            <Feather name={icon} size={18} color={iconColor} />
+            <Icon name={icon} size={18} color={iconColor} />
           </View>
         )}
         <View>

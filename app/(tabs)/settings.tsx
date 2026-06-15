@@ -8,7 +8,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from '../../components/Icon';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
 import Header from '../../components/Header';
@@ -80,19 +80,19 @@ export default function SettingsScreen() {
             {user?.avatar ? (
               <Image source={{ uri: user.avatar }} style={styles.avatarImage} />
             ) : (
-              <Feather name="user" size={24} color={Colors['slate-400']} />
+              <Icon name="user" size={24} color={Colors['slate-400']} />
             )}
           </View>
           <View style={styles.profileInfo}>
             <Text style={styles.profileName}>{user?.name || 'User'}</Text>
             <Text style={styles.profileEmail}>{user?.email || 'user@email.com'}</Text>
             <View style={[styles.planBadge, { backgroundColor: Colors['primary-light'] }]}>
-              <Feather name="crown" size={10} color={planColor} />
+              <Icon name="crown" size={10} color={planColor} />
               <Text style={[styles.planText, { color: planColor }]}>{planLabel}</Text>
             </View>
           </View>
         </View>
-        <Feather name="chevron-right" size={20} color={Colors.primary} />
+        <Icon name="chevron-right" size={20} color={Colors.primary} />
       </TouchableOpacity>
 
       {/* Connected Accounts */}
@@ -107,7 +107,7 @@ export default function SettingsScreen() {
             iconBg="#FCE7F3"
             right={
               <View style={styles.connectedBadge}>
-                <Feather name="link" size={11} color="#065F46" />
+                <Icon name="link" size={11} color="#065F46" />
                 <Text style={styles.connectedText}>Connected</Text>
               </View>
             }
@@ -121,7 +121,7 @@ export default function SettingsScreen() {
             iconBg="#F1F5F9"
             right={
               <View style={styles.connectedBadge}>
-                <Feather name="link" size={11} color="#065F46" />
+                <Icon name="link" size={11} color="#065F46" />
                 <Text style={styles.connectedText}>Connected</Text>
               </View>
             }
@@ -198,7 +198,7 @@ export default function SettingsScreen() {
               <Text style={styles.selectText}>
                 {POSTING_TIMES.find((t) => t.value === defaultTime)?.label || '12:00 PM'}
               </Text>
-              <Feather name="chevron-down" size={14} color={Colors['slate-500']} />
+              <Icon name="chevron-down" size={14} color={Colors['slate-500']} />
             </TouchableOpacity>
           </View>
           <View style={styles.divider} />
@@ -211,7 +211,7 @@ export default function SettingsScreen() {
               <Text style={styles.selectText}>
                 {LANGUAGES.find((l) => l.value === language)?.label || 'English'}
               </Text>
-              <Feather name="chevron-down" size={14} color={Colors['slate-500']} />
+              <Icon name="chevron-down" size={14} color={Colors['slate-500']} />
             </TouchableOpacity>
           </View>
         </View>
@@ -222,18 +222,18 @@ export default function SettingsScreen() {
         <Text style={[styles.cardTitle, { color: '#EF4444' }]}>Account</Text>
         <TouchableOpacity style={styles.dangerRow} onPress={handleSignOut} activeOpacity={0.7}>
           <View style={styles.dangerRowLeft}>
-            <Feather name="log-out" size={18} color="#EF4444" />
+            <Icon name="log-out" size={18} color="#EF4444" />
             <Text style={styles.dangerRowText}>Sign Out</Text>
           </View>
-          <Feather name="chevron-right" size={16} color="#EF4444" />
+          <Icon name="chevron-right" size={16} color="#EF4444" />
         </TouchableOpacity>
         <View style={[styles.divider, { borderColor: '#FECACA' }]} />
         <TouchableOpacity style={styles.dangerRow} onPress={handleDeleteAccount} activeOpacity={0.7}>
           <View style={styles.dangerRowLeft}>
-            <Feather name="trash-2" size={18} color={Colors['slate-400']} />
+            <Icon name="trash-2" size={18} color={Colors['slate-400']} />
             <Text style={[styles.dangerRowText, { color: Colors['slate-400'] }]}>Delete Account</Text>
           </View>
-          <Feather name="chevron-right" size={16} color={Colors['slate-300']} />
+          <Icon name="chevron-right" size={16} color={Colors['slate-300']} />
         </TouchableOpacity>
       </View>
 

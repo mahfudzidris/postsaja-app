@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 
 interface PlanCardProps {
@@ -44,7 +44,7 @@ export function PlanCard({ name, price, features, isActive, isCurrent }: PlanCar
       <View style={styles.features}>
         {features.map((f, i) => (
           <View key={i} style={styles.featureRow}>
-            <Feather name="check" size={14} color={Colors.accent} />
+            <Icon name="check" size={14} color={Colors.accent} />
             <Text style={styles.featureText}>{f}</Text>
           </View>
         ))}
@@ -52,7 +52,7 @@ export function PlanCard({ name, price, features, isActive, isCurrent }: PlanCar
 
       {isActive && (
         <View style={styles.currentPlanBtn}>
-          <Feather name="crown" size={14} color="#FFF" />
+          <Icon name="crown" size={14} color="#FFF" />
           <Text style={styles.currentPlanBtnText}>Current Plan</Text>
         </View>
       )}

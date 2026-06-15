@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from '../../components/Icon';
 import { router } from 'expo-router';
 import { Colors } from '../../constants/colors';
 import { GradientButton } from '../../components/GradientButton';
@@ -60,7 +60,7 @@ export default function LoginScreen() {
         {/* Logo */}
         <View style={styles.logoSection}>
           <View style={styles.logoCircle}>
-            <Feather name="send" size={28} color={Colors.primary} />
+            <Icon name="send" size={28} color={Colors.primary} />
           </View>
           <Text style={styles.appName}>PostSaja</Text>
           <Text style={styles.tagline}>
@@ -74,7 +74,7 @@ export default function LoginScreen() {
         {/* Error */}
         {error ? (
           <View style={styles.errorBox}>
-            <Feather name="alert-circle" size={14} color="#EF4444" />
+            <Icon name="alert-circle" size={14} color="#EF4444" />
             <Text style={styles.errorText}>{error}</Text>
           </View>
         ) : null}

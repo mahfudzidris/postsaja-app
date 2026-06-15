@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 import { BorderRadius, Spacing } from '../constants/spacing';
 import { BoxShadows } from '../constants/shadows';
@@ -64,7 +64,7 @@ export function GradientButton({
         ) : (
           <View style={styles.content}>
             {icon && (
-              <Feather name={icon} size={isLarge ? 20 : 18} color="#FFFFFF" />
+              <Icon name={icon} size={isLarge ? 20 : 18} color="#FFFFFF" />
             )}
             <Text
               style={[

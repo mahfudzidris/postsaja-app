@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from 'components/Icon';
 import { router } from 'expo-router';
 import { Colors } from '../constants/colors';
 import Header from '../components/Header';
@@ -92,7 +92,7 @@ export default function NotificationsScreen() {
       {notifications.length === 0 ? (
         <View style={styles.emptyState}>
           <View style={styles.emptyIcon}>
-            <Feather name="bell" size={36} color={Colors['slate-300']} />
+            <Icon name="bell" size={36} color={Colors['slate-300']} />
           </View>
           <Text style={styles.emptyTitle}>No notifications</Text>
           <Text style={styles.emptySubtitle}>You're all caught up!</Text>

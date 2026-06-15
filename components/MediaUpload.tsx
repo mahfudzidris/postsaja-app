@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, Image, StyleSheet, Platform } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { Colors } from '../constants/colors';
 
 interface MediaItem {
@@ -27,7 +27,7 @@ export function MediaUpload({ media, onAdd, onRemove }: MediaUploadProps) {
         onMouseLeave={() => setIsHovered(false)}
       >
         <View style={styles.iconCircle}>
-          <Feather name="image-plus" size={28} color={Colors.primary} />
+          <Icon name="image-plus" size={28} color={Colors.primary} />
         </View>
         <Text style={styles.addText}>Add Media</Text>
         <Text style={styles.hintText}>
@@ -43,14 +43,14 @@ export function MediaUpload({ media, onAdd, onRemove }: MediaUploadProps) {
                 <Image source={{ uri: item.uri }} style={styles.thumbImage} />
               ) : (
                 <View style={[styles.thumbImage, styles.videoThumb]}>
-                  <Feather name="play" size={16} color="#FFF" />
+                  <Icon name="play" size={16} color="#FFF" />
                 </View>
               )}
               <TouchableOpacity
                 style={styles.removeBtn}
                 onPress={() => onRemove(index)}
               >
-                <Feather name="x" size={12} color="#FFF" />
+                <Icon name="x" size={12} color="#FFF" />
               </TouchableOpacity>
             </View>
           ))}

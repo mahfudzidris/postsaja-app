@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from './Icon';
 import { router } from 'expo-router';
 import { Colors } from '../constants/colors';
 import { BoxShadows } from '../constants/shadows';
@@ -33,7 +33,7 @@ export default function Header({
           onPress={() => router.back()}
           activeOpacity={0.7}
         >
-          <Feather name="arrow-left" size={22} color={Colors.text} />
+          <Icon name="arrow-left" size={22} color={Colors.text} />
           {title && <Text style={styles.titleText}>{title}</Text>}
         </TouchableOpacity>
 
@@ -45,7 +45,7 @@ export default function Header({
                 onPress={() => router.push('/notifications')}
                 activeOpacity={0.7}
               >
-                <Feather name="bell" size={22} color={Colors.muted} strokeWidth={1.5} />
+                <Icon name="bell" size={22} color={Colors.muted} strokeWidth={1.5} />
                 {unreadCount > 0 && (
                   <View style={styles.badge}>
                     <Text style={styles.badgeText}>
@@ -61,7 +61,7 @@ export default function Header({
                 activeOpacity={0.7}
               >
                 <View style={styles.avatar}>
-                  <Feather name="user" size={14} color={Colors.muted} />
+                  <Icon name="user" size={14} color={Colors.muted} />
                 </View>
               </TouchableOpacity>
             </>
@@ -78,7 +78,7 @@ export default function Header({
         onPress={() => router.replace('/(tabs)/create')}
         activeOpacity={0.7}
       >
-        <Feather name="send" size={22} color={Colors.primary} strokeWidth={2.5} />
+        <Icon name="send" size={22} color={Colors.primary} strokeWidth={2.5} />
         <Text style={styles.logoText}>PostSaja</Text>
       </TouchableOpacity>
 
@@ -88,7 +88,7 @@ export default function Header({
           onPress={() => router.push('/notifications')}
           activeOpacity={0.7}
         >
-          <Feather name="bell" size={22} color={Colors.muted} strokeWidth={1.5} />
+          <Icon name="bell" size={22} color={Colors.muted} strokeWidth={1.5} />
           {unreadCount > 0 && (
             <View style={styles.badge}>
               <Text style={styles.badgeText}>
@@ -104,7 +104,7 @@ export default function Header({
           activeOpacity={0.7}
         >
           <View style={styles.avatar}>
-            <Feather name="user" size={14} color={Colors.muted} />
+            <Icon name="user" size={14} color={Colors.muted} />
           </View>
         </TouchableOpacity>
       </View>
