@@ -45,7 +45,7 @@ export function GradientButton({
       disabled={disabled || loading}
       style={[
         styles.wrapper,
-        rounded && styles.rounded,
+        rounded === true ? styles.rounded : styles.roundedXl,
         disabled && styles.disabled,
       ]}
     >
@@ -56,7 +56,7 @@ export function GradientButton({
         style={[
           styles.gradient,
           isLarge ? styles.sizeLg : styles.sizeMd,
-          rounded && styles.rounded,
+          rounded === true ? styles.rounded : styles.roundedXl,
         ]}
       >
         {loading ? (
@@ -99,6 +99,10 @@ const styles = StyleSheet.create({
   },
   rounded: {
     borderRadius: BorderRadius.full,
+    overflow: 'hidden',
+  },
+  roundedXl: {
+    borderRadius: BorderRadius['2xl'],
     overflow: 'hidden',
   },
   disabled: {

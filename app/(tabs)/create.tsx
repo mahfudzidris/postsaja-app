@@ -183,21 +183,15 @@ export default function CreateScreen() {
 
       {/* Action Buttons */}
       <View style={styles.actions}>
-        <TouchableOpacity
-          style={[styles.postBtn, loading && { opacity: 0.7 }]}
+        <GradientButton
+          title="Post Saja!"
+          icon="rocket"
           onPress={handlePost}
+          loading={loading}
           disabled={loading}
-          activeOpacity={0.9}
-        >
-          {loading ? (
-            <ActivityIndicator color="#FFF" />
-          ) : (
-            <>
-              <Text style={styles.postBtnText}>Post Saja!</Text>
-              <Icon name="send" size={20} color="#FFF" />
-            </>
-          )}
-        </TouchableOpacity>
+          size="lg"
+          rounded={false}
+        />
 
         <TouchableOpacity
           style={styles.draftBtn}
