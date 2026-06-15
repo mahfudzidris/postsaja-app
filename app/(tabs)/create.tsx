@@ -13,6 +13,7 @@ import {
 import { Icon } from '../../components/Icon';
 import { Colors } from '../../constants/colors';
 import Header from '../../components/Header';
+import { GradientButton } from '../../components/GradientButton';
 import { ChannelButton } from '../../components/ChannelButton';
 import { MediaUpload } from '../../components/MediaUpload';
 import { posts } from '../../services/api';
