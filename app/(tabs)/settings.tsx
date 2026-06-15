@@ -17,7 +17,7 @@ import Header from '../../components/Header';
 import { SettingRow } from '../../components/SettingRow';
 import { ToggleSwitch } from '../../components/ToggleSwitch';
 import { AuthService } from '../../services/auth';
-import { auth as authApi } from '../../services/api';
+import api from '../../services/api';
 import { User } from '../../types';
 import { POSTING_TIMES, LANGUAGES, APP_VERSION } from '../../constants/plans';
 
@@ -44,7 +44,7 @@ export default function SettingsScreen() {
   const fetchPlatforms = async () => {
     setPlatformsLoading(true);
     try {
-      const res = await authApi.get('/platforms');
+      const res = await api.get('/platforms');
       setPlatforms(res.data.platforms || []);
     } catch {
       // Use empty
@@ -58,7 +58,7 @@ export default function SettingsScreen() {
       const token = window.prompt(`Enter your ${platformId} access token:`);
       if (!token) return;
       try {
-        await authApi.post(`/platforms/${platformId}/callback`, {
+        await api.post(`/platforms/${platformId}/callback`, {
           access_token: token,
         });
         Alert.alert('Connected!', `${platformId} connected successfully.`);
@@ -71,7 +71,7 @@ export default function SettingsScreen() {
 
   const handleDisconnect = async (platformId: string) => {
     try {
-      await authApi.delete(`/platforms/${platformId}/disconnect`);
+      await api.delete(`/platforms/${platformId}/disconnect`);
       fetchPlatforms();
     } catch {
       // ignore
